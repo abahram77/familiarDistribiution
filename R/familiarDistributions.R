@@ -1,5 +1,5 @@
 recent <- 29
-dummyXor <- function(a , b){
+fdummyXor <- function(a , b){
   output <- 0
   if((a >= 2 ^ 31) && (b >= 2 ^ 31)){
     a <- (a - 2 ^ 31)
@@ -194,105 +194,318 @@ nogen<- function(u,s){
   return(resultlt)
 }
 
-visualizeCu <- function(){
+visualizeCu <- function(brick, color){
 
   test <- vector()
-  for (i in 1:10000){
+  for (i in 1:1000){
     test <- c(test, cugen(1))
   }
-  hist(test)
-  test <- as.data.frame(test)
-  ggplot(test, aes(x = test))+ geom_density()
+  sd <- sd(test)
+  expected <- mean(test)
+  med <- median(test)
+  dev <- paste("standard deviation : ", sd)
+  exp <-  paste("expected value : ", expected)
+  me <- paste("median : ", med)
+  xName <- paste(dev, exp , me , sep = "\n")
+
+  return(hist(test, brick, xlab = "random numbers", ylab = "count", main =xName, col = color,border = "white"))
+
+
+
+}
+visualizeCuPlot <- function(){
+
+  test <- vector()
+  for (i in 1:1000){
+    test <- c(test, cugen(1))
+  }
+  sd <- sd(test)
+  expected <- mean(test)
+  med <- median(test)
+  dev <- paste("standard deviation : ", sd)
+  exp <-  paste("expected value : ", expected)
+  me <- paste("median : ", med)
+  xName <- paste(dev, exp, me , sep = "\n")
+  test <- data.frame(test)
+  return(ggplot(test, aes(x = test)) + geom_density() + geom_vline(xintercept = expected, colour="green", linetype= "dashed", size=1) + geom_vline(xintercept = sd, colour="red", linetype= "dashed", size=1)
+         + geom_vline(xintercept = med, colour="dodgerblue1", linetype= "dashed", size=1) )
+
 
 
 }
 
-visualizeDu <- function(st,en){
+visualizeDu <- function(st,en , brick , color){
 
   test <- vector()
   for (i in 1:10000){
     test <- c(test, dugen(st,en,1))
   }
-  hist(test)
-  test <- as.data.frame(test)
-  ggplot(test, aes(x = test))+ geom_density()
-
+  sd <- sd(test)
+  expected <- mean(test)
+  med <- median(test)
+  dev <- paste("standard deviation : ", sd)
+  exp <-  paste("expected value : ", expected)
+  me <- paste("median : ", med)
+  xName <- paste(dev, exp, me ,sep = "\n")
+  return(hist(test, brick, xlab = "random numbers", ylab = "count", main =xName, col = color,border = "white"))
 
 }
 
-visualizebr <- function(p){
+visualizeDuPlot <- function(st , en){
 
   test <- vector()
   for (i in 1:10000){
+    test <- c(test, dugen(st,en,1))
+  }
+  sd <- sd(test)
+  expected <- mean(test)
+  med <- median(test)
+  dev <- paste("standard deviation : ", sd)
+  exp <-  paste("expected value : ", expected)
+  me <- paste("median :  " , med)
+  xName <- paste(dev, exp, med ,  sep = "\n")
+  test <- data.frame(test)
+  return(ggplot(test, aes(x = test)) + geom_density() + geom_vline(xintercept = expected, colour="green", linetype= "dashed", size=1) + geom_vline(xintercept = sd, colour="red", linetype= "dashed", size=1)
+         + geom_vline(xintercept = med, colour="dodgerblue1", linetype= "dashed", size=1) )
+}
+
+visualizebr <- function(p , brick , color){
+
+  test <- vector()
+  for (i in 1:1000){
     test <- c(test, brgen(p,1))
   }
-  hist(test)
-  test <- as.data.frame(test)
-  ggplot(test, aes(x = test))+ geom_density()
-
+  sd <- sd(test)
+  expected <- mean(test)
+  med <- median(test)
+  dev <- paste("standard deviation : ", sd)
+  exp <-  paste("expected value : ", expected)
+  me <- paste("median : ", med)
+  xName <- paste(dev, exp, me ,sep = "\n")
+  return(hist(test, brick, xlab = "random numbers", ylab = "count", main =xName, col = color,border = "white"))
 
 }
 
-visualizebi <- function(p,num){
+visualizebrPlot <- function(p){
+
+  test <- vector()
+  for (i in 1:1000){
+    test <- c(test, brgen(p,1))
+  }
+  sd <- sd(test)
+  expected <- mean(test)
+  med <- median(test)
+  dev <- paste("standard deviation : ", sd)
+  exp <-  paste("expected value : ", expected)
+  me <- paste("median :  " , med)
+  xName <- paste(dev, exp, med ,  sep = "\n")
+  test <- data.frame(test)
+  return(ggplot(test, aes(x = test)) + geom_density() + geom_vline(xintercept = expected, colour="green", linetype= "dashed", size=1) + geom_vline(xintercept = sd, colour="red", linetype= "dashed", size=1)
+         + geom_vline(xintercept = med, colour="dodgerblue1", linetype= "dashed", size=1) )
+
+}
+
+visualizebi <- function(p,num , brick , color){
 
   test <- vector()
   for (i in 1:1000){
     test <- c(test, bigen(p,num))
   }
-  hist(test)
-  test <- as.data.frame(test)
-  ggplot(test, aes(x = test))+ geom_density()
-
-
+  sd <- sd(test)
+  expected <- mean(test)
+  med <- median(test)
+  dev <- paste("standard deviation : ", sd)
+  exp <-  paste("expected value : ", expected)
+  me <- paste("median : ", med)
+  xName <- paste(dev, exp, me ,sep = "\n")
+  return(hist(test, brick, xlab = "random numbers", ylab = "count", main =xName, col = color,border = "white"))
 }
 
-visualizegeo <- function(p){
+visualizebiPlot <- function(p,num){
 
   test <- vector()
   for (i in 1:1000){
-    test <- c(test, gegen(p))
+    test <- c(test, bigen(p,num))
   }
-  hist(test)
-  test <- as.data.frame(test)
-  ggplot(test, aes(x = test))+ geom_density()
+  sd <- sd(test)
+  expected <- mean(test)
+  med <- median(test)
+  dev <- paste("standard deviation : ", sd)
+  exp <-  paste("expected value : ", expected)
+  me <- paste("median :  " , med)
+  xName <- paste(dev, exp, med ,  sep = "\n")
+  test <- data.frame(test)
+  return(ggplot(test, aes(x = test)) + geom_density() + geom_vline(xintercept = expected, colour="green", linetype= "dashed", size=1) + geom_vline(xintercept = sd, colour="red", linetype= "dashed", size=1)
+         + geom_vline(xintercept = med, colour="dodgerblue1", linetype= "dashed", size=1) )
+}
 
+visualizegeo <- function(p , brick , color){
+
+  test <- vector()
+  for (i in 1:1000){
+    test <- c(test, gegen3(p))
+  }
+  sd <- sd(test)
+  expected <- mean(test)
+  med <- median(test)
+  dev <- paste("standard deviation : ", sd)
+  exp <-  paste("expected value : ", expected)
+  me <- paste("median : ", med)
+  xName <- paste(dev, exp, me ,sep = "\n")
+  return(hist(test, brick, xlab = "random numbers", ylab = "count", main =xName, col = color,border = "white"))
 
 }
 
-visualizeEXP <- function(lambda){
+visualizegeoPlot <- function(p){
 
   test <- vector()
-  for (i in 1:10000){
+  for (i in 1:1000){
+    test <- c(test, gegen3(p))
+  }
+  sd <- sd(test)
+  expected <- mean(test)
+  med <- median(test)
+  dev <- paste("standard deviation : ", sd)
+  exp <-  paste("expected value : ", expected)
+  me <- paste("median :  " , med)
+  xName <- paste(dev, exp, med ,  sep = "\n")
+  test <- data.frame(test)
+  return(ggplot(test, aes(x = test)) + geom_density() + geom_vline(xintercept = expected, colour="green", linetype= "dashed", size=1) + geom_vline(xintercept = sd, colour="red", linetype= "dashed", size=1)
+         + geom_vline(xintercept = med, colour="dodgerblue1", linetype= "dashed", size=1) )
+}
+
+visualizeEXP <- function(lambda , brick , color){
+
+  test <- vector()
+  for (i in 1:1000){
     test <- c(test, expgen(lambda))
   }
-  test <- as.data.frame(test)
-  ggplot(test, aes(x = test))+ geom_density()
+  sd <- sd(test)
+  expected <- mean(test)
+  med <- median(test)
+  dev <- paste("standard deviation : ", sd)
+  exp <-  paste("expected value : ", expected)
+  me <- paste("median : ", med)
+  xName <- paste(dev, exp, me ,sep = "\n")
+  return(hist(test, brick, xlab = "random numbers", ylab = "count", main =xName, col = color,border = "white"))
+
 
 }
-visualizeGAMMA <- function(lambda, k){
+
+visualizeEXPPlot <- function(lambda){
+
   test <- vector()
-  for (i in 1:10000){
+  for (i in 1:1000){
+    test <- c(test, expgen(lambda))
+  }
+  sd <- sd(test)
+  expected <- mean(test)
+  med <- median(test)
+  dev <- paste("standard deviation : ", sd)
+  exp <-  paste("expected value : ", expected)
+  me <- paste("median :  " , med)
+  xName <- paste(dev, exp, med ,  sep = "\n")
+  test <- data.frame(test)
+  return(ggplot(test, aes(x = test)) + geom_density() + geom_vline(xintercept = expected, colour="green", linetype= "dashed", size=1) + geom_vline(xintercept = sd, colour="red", linetype= "dashed", size=1)
+         + geom_vline(xintercept = med, colour="dodgerblue1", linetype= "dashed", size=1) )
+
+}
+
+visualizeGAMMA <- function(lambda, k , brick , color){
+  test <- vector()
+  for (i in 1:1000){
     test <- c(test, gagen(lambda, k))
   }
-  test <- as.data.frame(test)
-  ggplot(test, aes(x = test))+ geom_density()
+  sd <- sd(test)
+  expected <- mean(test)
+  med <- median(test)
+  dev <- paste("standard deviation : ", sd)
+  exp <-  paste("expected value : ", expected)
+  me <- paste("median : ", med)
+  xName <- paste(dev, exp, me ,sep = "\n")
+  return(hist(test, brick, xlab = "random numbers", ylab = "count", main =xName, col = color,border = "white"))
 
 }
-visualizePOISSON <- function(lambda, t){
+
+visualizeGAMMAPlot <- function(lambda, k){
   test <- vector()
-  for (i in 1:10000){
+  for (i in 1:1000){
+    test <- c(test, gagen(lambda, k))
+  }
+  sd <- sd(test)
+  expected <- mean(test)
+  med <- median(test)
+  dev <- paste("standard deviation : ", sd)
+  exp <-  paste("expected value : ", expected)
+  me <- paste("median :  " , med)
+  xName <- paste(dev, exp, med ,  sep = "\n")
+  test <- data.frame(test)
+  return(ggplot(test, aes(x = test)) + geom_density() + geom_vline(xintercept = expected, colour="green", linetype= "dashed", size=1) + geom_vline(xintercept = sd, colour="red", linetype= "dashed", size=1)
+         + geom_vline(xintercept = med, colour="dodgerblue1", linetype= "dashed", size=1) )
+}
+
+visualizePOISSON <- function(lambda, t , brick , color){
+  test <- vector()
+  for (i in 1:1000){
     test <- c(test, pogen(lambda, t))
   }
-  test <- as.data.frame(test)
-  ggplot(test, aes(x = test))+ geom_density()
+  sd <- sd(test)
+  expected <- mean(test)
+  med <- median(test)
+  dev <- paste("standard deviation : ", sd)
+  exp <-  paste("expected value : ", expected)
+  me <- paste("median : ", med)
+  xName <- paste(dev, exp, me ,sep = "\n")
+  return(hist(test, brick, xlab = "random numbers", ylab = "count", main =xName, col = color,border = "white"))
+
 }
 
-visualizeNORMAL <- function(u, s){
+visualizePOISSONPlot <- function(lambda, t){
   test <- vector()
-  for (i in 1:10000){
+  for (i in 1:1000){
+    test <- c(test, pogen(lambda, t))
+  }
+  sd <- sd(test)
+  expected <- mean(test)
+  med <- median(test)
+  dev <- paste("standard deviation : ", sd)
+  exp <-  paste("expected value : ", expected)
+  me <- paste("median :  " , med)
+  xName <- paste(dev, exp, med ,  sep = "\n")
+  test <- data.frame(test)
+  return(ggplot(test, aes(x = test)) + geom_density() + geom_vline(xintercept = expected, colour="green", linetype= "dashed", size=1) + geom_vline(xintercept = sd, colour="red", linetype= "dashed", size=1)
+         + geom_vline(xintercept = med, colour="dodgerblue1", linetype= "dashed", size=1) )
+}
+
+
+visualizeNORMAL <- function(u, s , brick , color){
+  test <- vector()
+  for (i in 1:1000){
     test <- c(test, nogen(u, s))
   }
-  test <- as.data.frame(test)
-  ggplot(test, aes(x = test))+ geom_density()
+  sd <- sd(test)
+  expected <- mean(test)
+  med <- median(test)
+  dev <- paste("standard deviation : ", sd)
+  exp <-  paste("expected value : ", expected)
+  me <- paste("median : ", med)
+  xName <- paste(dev, exp, me ,sep = "\n")
+  return(hist(test, brick, xlab = "random numbers", ylab = "count", main =xName, col = color,border = "white"))
+}
 
+visualizeNORMALPlot <- function(u, s){
+  test <- vector()
+  for (i in 1:1000){
+    test <- c(test, nogen(u, s))
+  }
+  sd <- sd(test)
+  expected <- mean(test)
+  med <- median(test)
+  dev <- paste("standard deviation : ", sd)
+  exp <-  paste("expected value : ", expected)
+  me <- paste("median :  " , med)
+  xName <- paste(dev, exp, med ,  sep = "\n")
+  test <- data.frame(test)
+  return(ggplot(test, aes(x = test)) + geom_density() + geom_vline(xintercept = expected, colour="green", linetype= "dashed", size=1) + geom_vline(xintercept = sd, colour="red", linetype= "dashed", size=1)
+         + geom_vline(xintercept = med, colour="dodgerblue1", linetype= "dashed", size=1) )
 }
